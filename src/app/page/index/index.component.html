@@ -1,0 +1,32 @@
+<nz-layout>
+  <nz-header class="index-header">
+    <div class="index-header-title">表单设计器</div>
+    <div class="index-header-ops-wrapper">
+      <button nz-button [nzGhost]="true">预览</button>
+      <button nz-button [nzGhost]="true">源码</button>
+    </div>
+  </nz-header>
+  <nz-content>
+    <div class="index-wrapper">
+      <div class="components-wrapper">
+        <h2>素材区域</h2>
+        <div class="component-card" *ngFor="let el of formElements">
+          <span>{{el?.label}}</span>
+          <i (click)="addElement(el?.id)" nz-icon nzType="plus" nzTheme="outline"></i>
+        </div>
+      </div>
+      <div class="form-preview-wrapper">
+        <h2>预览区域</h2>
+        <div class="form-preview-wrapper-bar">
+          <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+        </div>
+      </div>
+      <div class="component-detail-wrapper">
+        <h2>配置区域</h2>
+        <ace-editor [(text)]="schemaStr" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '12px'}"
+                    [durationBeforeCallback]="1000" (textChanged)="run()"
+                    style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

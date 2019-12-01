@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+.sf-btns {
+  .ant-btn + .ant-btn {
+    margin-left: 8px;
+  }
+}
