@@ -10,9 +10,9 @@
     <div class="index-wrapper">
       <div class="components-wrapper">
         <h2>素材区域</h2>
-        <div class="component-card" *ngFor="let el of formElements">
+        <div (click)="addElement(el?.id)" class="component-card" *ngFor="let el of formElements">
           <span>{{el?.label}}</span>
-          <i (click)="addElement(el?.id)" nz-icon nzType="plus" nzTheme="outline"></i>
+          <i nz-icon nzType="plus" nzTheme="outline"></i>
         </div>
       </div>
       <div class="form-preview-wrapper">

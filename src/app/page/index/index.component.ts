@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormElement} from '../../model/form-element.model';
 import {FormElementService} from '../../core/service/form-element.service';
 import {SFComponent, SFSchema} from '@delon/form';
+import {JsonUtil} from '../../core/util/json.util';
 
 @Component({
   selector: 'app-index',
@@ -32,7 +33,7 @@ export class IndexComponent implements OnInit {
   }
 
   addElement(elementId: string, fieldName?: string): void {
-    IndexComponent.count ++;
+    IndexComponent.count++;
     if (typeof fieldName === 'undefined' || fieldName === null) {
       fieldName = elementId + IndexComponent.count;
     }
@@ -51,6 +52,6 @@ export class IndexComponent implements OnInit {
   }
 
   private refreshSchemaStr() {
-    this.schemaStr = JSON.stringify(this.schema, null, 4);
+    this.schemaStr = JsonUtil.deepStringify(this.schema);
   }
 }

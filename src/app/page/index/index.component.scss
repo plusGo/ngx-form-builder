@@ -8,6 +8,7 @@
     height: 100%;
     padding: 8px;
     flex: 0 0 auto;
+    overflow: auto;
     .component-card {
       background: #001529;
       padding: 8px;
@@ -22,6 +23,7 @@
 
   }
   .form-preview-wrapper {
+    overflow: auto;
 
     background: #3F486B;
     height: 100%;
@@ -35,6 +37,8 @@
     }
   }
   .component-detail-wrapper {
+    overflow: auto;
+
     width: 640px;
     background: #3F486B;
     height: 100%;
