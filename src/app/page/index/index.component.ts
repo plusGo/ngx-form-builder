@@ -1,8 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormElement} from '../../model/form-element.model';
-import {FormElementService} from '../../core/service/form-element.service';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {FieldElement} from '../../model/form-element.model';
+import {FieldElementService} from '../../core/service/field-element.service';
 import {SFComponent, SFSchema} from '@delon/form';
 import {JsonUtil} from '../../core/util/json.util';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {FormFieldType} from '../../core/type/form-field.type';
+import {NzModalService} from 'ng-zorro-antd';
+import {FormFieldLogicFormComponent} from './form-field-logic-form/form-field-logic-form.component';
 
 @Component({
   selector: 'app-index',
@@ -10,48 +14,71 @@ import {JsonUtil} from '../../core/util/json.util';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  static count = 0;
+  formElements: FieldElement[] = [];
 
-  formElements: FormElement[] = [];
-  schema: SFSchema = {
-    properties: {}
-  };
-  schemaStr = '';
+  builderSchemas: SFSchema[] = [];
+  schemaSerialized = '';
 
-  @ViewChild(SFComponent, {static: false}) formEl: SFComponent;
+  selectedSchema: SFSchema;
 
-  constructor(private formElementService: FormElementService) {
-    this.loadFormElements();
-    this.refreshSchemaStr();
+  @ViewChildren(SFComponent) fieldFormRefList: QueryList<SFComponent>;
+
+  constructor(private formElementService: FieldElementService,
+              private modalService: NzModalService) {
+    this.formElements = this.formElementService.getAll();
   }
 
   ngOnInit() {
   }
 
-  private loadFormElements() {
-    this.formElements = this.formElementService.getAll();
-  }
-
-  addElement(elementId: string, fieldName?: string): void {
-    IndexComponent.count++;
-    if (typeof fieldName === 'undefined' || fieldName === null) {
-      fieldName = elementId + IndexComponent.count;
+  addElement(fieldType: FormFieldType): void {
+    const fieldSchema = this.formElementService.getCompleteSchemaByFieldType(fieldType);
+    this.builderSchemas.push(fieldSchema);
+    if (this.builderSchemas.length === 1) {
+      this.selectBuildingField(fieldSchema);
     }
-    const elSchema = this.formElementService.getDefaultConfigById(elementId);
-    this.schema.properties[fieldName] = elSchema;
-    this.refreshSchemaStr();
-    this.formEl.refreshSchema();
   }
 
-
-  submit(value: any) {
+  selectBuildingField(schema: SFSchema): void {
+    this.selectedSchema = schema;
+    this.refreshSchemaStr();
   }
 
   run() {
-    this.formEl.refreshSchema();
+    // this.formEl.refreshSchema();
   }
 
   private refreshSchemaStr() {
-    this.schemaStr = JsonUtil.deepStringify(this.schema);
+    if (this.selectedSchema) {
+      this.schemaSerialized = JsonUtil.deepStringify(this.selectedSchema);
+    }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.builderSchemas, event.previousIndex, event.currentIndex);
+  }
+
+
+  onFieldConfigValueChange($event: SFSchema) {
+    this.selectedSchema.properties = $event.properties;
+    this.selectedSchema.required = $event.required;
+
+    const destFieldSchema = this.fieldFormRefList.find((item, index) => {
+      return index === this.builderSchemas.indexOf(this.selectedSchema);
+    });
+    destFieldSchema.refreshSchema(this.selectedSchema);
+    this.refreshSchemaStr();
+  }
+
+  editLogicConfig() {
+    this.modalService.create({
+      nzTitle: '关联设置',
+      nzContent: FormFieldLogicFormComponent,
+      nzMaskClosable: false,
+      nzWidth: 880,
+      nzComponentParams: {
+        fieldSchemas: this.builderSchemas
+      }
+    });
   }
 }

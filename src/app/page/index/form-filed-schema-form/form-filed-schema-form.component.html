@@ -1,0 +1,10 @@
+
+<nz-card>
+  <sf  #basicSchemaFormRef [schema]="basicSchema" [button]="'none'"></sf>
+  <div nz-row>
+    <button nz-button nzType="primary" (click)="submit()">提交</button>
+  </div>
+  {{basicSchemaFormRef?.value | json}}
+  {{basicSchema | json}}
+</nz-card>
+<hr>

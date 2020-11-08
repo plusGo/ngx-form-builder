@@ -1,31 +1,62 @@
 <nz-layout>
-  <nz-header class="index-header">
-    <div class="index-header-title">表单设计器</div>
-    <div class="index-header-ops-wrapper">
+  <nz-header class="builder-page-header">
+    <div class="builder-page-header-title">Easy表单设计器</div>
+    <div class="builder-page-header-ops-wrapper button-wrapper">
       <button nz-button [nzGhost]="true">预览</button>
       <button nz-button [nzGhost]="true">源码</button>
     </div>
   </nz-header>
+
   <nz-content>
-    <div class="index-wrapper">
-      <div class="components-wrapper">
-        <h2>素材区域</h2>
-        <div (click)="addElement(el?.id)" class="component-card" *ngFor="let el of formElements">
+    <div class="form-builder-content-wrapper">
+      <div class="field-list-wrapper">
+        <h2>素材区</h2>
+        <div (click)="addElement(el?.id)" class="field-item-card" *ngFor="let el of formElements">
           <span>{{el?.label}}</span>
           <i nz-icon nzType="plus" nzTheme="outline"></i>
         </div>
       </div>
       <div class="form-preview-wrapper">
-        <h2>预览区域</h2>
-        <div class="form-preview-wrapper-bar">
-          <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+        <div class="form-preview-wrapper-header">
+          <h2>预览区</h2>
+          <div class="button-wrapper">
+            <button (click)="editLogicConfig()" nz-button [nzGhost]="true">关联设置</button>
+          </div>
+        </div>
+        <div cdkDropList class="form-preview-wrapper-bar" (cdkDropListDropped)="drop($event)">
+          <div [class.active]="opsSchemas === selectedSchema" (click)="selectBuildingField(opsSchemas)"
+               class="form-preview-field-wrapper" cdkDrag *ngFor="let opsSchemas of builderSchemas">
+            <sf [schema]="opsSchemas" [button]="'none'"></sf>
+          </div>
+          {{builderSchemas|json}}
+
         </div>
       </div>
-      <div class="component-detail-wrapper">
-        <h2>配置区域</h2>
-        <ace-editor [(text)]="schemaStr" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '12px'}"
-                    [durationBeforeCallback]="1000" (textChanged)="run()"
-                    style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      <div class="selected-field-config-wrapper">
+        <div class="selected-field-config-wrapper-header">
+          <h2>字段配置</h2>
+        </div>
+        <nz-tabset>
+          <nz-tab [nzTitle]="formTileTpl">
+            <ng-template #formTileTpl>
+              <span>
+              表单配置
+              </span>
+            </ng-template>
+            <app-form-filed-schema-form (valueChange)="onFieldConfigValueChange($event)"
+                                        [value]="selectedSchema"></app-form-filed-schema-form>
+          </nz-tab>
+          <nz-tab [nzTitle]="jsonTileTpl">
+            <ng-template #jsonTileTpl>
+              <span>
+              JSON配置
+              </span>
+            </ng-template>
+            <ace-editor [(text)]="schemaSerialized" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '12px'}"
+                        [durationBeforeCallback]="1000" (textChanged)="run()"
+                        style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+          </nz-tab>
+        </nz-tabset>
       </div>
     </div>
   </nz-content>

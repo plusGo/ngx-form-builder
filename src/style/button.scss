@@ -1,0 +1,5 @@
+.button-wrapper {
+  [nz-button] + [nz-button] {
+    margin-left: 8px;
+  }
+}

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FormElement} from '../../model/form-element.model';
+import {FieldElement} from '../../model/form-element.model';
 import {
   SFAutoCompleteWidgetSchema,
   SFCheckboxWidgetSchema,
@@ -14,121 +14,42 @@ import {
   SFTextWidgetSchema,
   SFTimeWidgetSchema,
   SFTransferWidgetSchema,
-  SFTreeSelectWidgetSchema, SFUploadWidgetSchema
+  SFTreeSelectWidgetSchema,
+  SFUploadWidgetSchema
 } from '@delon/form';
 import {NzMessageService} from 'ng-zorro-antd';
 import {of} from 'rxjs';
+import {FormElementData} from '../constant/form-field.map';
+import {FormFieldType} from '../type/form-field.type';
+import {FormSchemaFactory} from '../../model/factory/form-schema.factory';
 
-export const FormElementData: FormElement[] = [
-  // {label: 'array 数组', id: 'array'},
-  {label: 'autocomplete 自动完成', id: 'autocomplete'},
-  {label: 'boolean 开关', id: 'boolean'},
-  {label: 'cascader 级联选择', id: 'cascader'},
-  {label: 'checkbox 多选框', id: 'checkbox'},
-  {label: 'date 日期', id: 'date'},
-  {label: 'mention 提及', id: 'mention'},
-  {label: 'number 数字', id: 'number'},
-  // {label: 'object 对象', id: 'object'},
-  {label: 'radio 单选框', id: 'radio'},
-  {label: 'range 滑动输入条', id: 'range'},
-  {label: 'rate 评分', id: 'rate'},
-  {label: 'select 选择器', id: 'select'},
-  {label: 'string 文本框', id: 'string'},
-  {label: 'tag 标签', id: 'tag'},
-  {label: 'text 文本', id: 'text'},
-  {label: 'textarea 多行文本框', id: 'textarea'},
-  {label: 'time 时间', id: 'time'},
-  {label: 'transfer 穿梭框', id: 'transfer'},
-  {label: 'tree-select 树选择', id: 'tree-select'},
-  {label: 'upload 上传', id: 'upload'},
-];
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormElementService {
+export class FieldElementService {
 
 
   constructor(private messageService: NzMessageService) {
   }
 
-  getAll(): FormElement[] {
+  getAll(): FieldElement[] {
     return FormElementData;
   }
 
-  getDefaultConfigById(elementId: string): SFSchema {
-    if (elementId === 'string') {
+  getCompleteSchemaByFieldType(type: FormFieldType, fieldCode = new Date().getTime()): SFSchema {
+    const fieldSchema = this.getDefaultConfigByFieldType(type);
+    if (fieldSchema) {
+      const emptyFormSchema = FormSchemaFactory.getEmptyFormSchema();
+      emptyFormSchema.properties[fieldCode] = fieldSchema;
+      return emptyFormSchema;
+    }
+  }
+
+  getDefaultConfigByFieldType(type: FormFieldType): SFSchema {
+    if (type === 'string') {
       return this.getDefaultConfigOfStringWidget();
     }
-
-    if (elementId === 'boolean') {
-      return this.getDefaultConfigOfBooleanWidget();
-    }
-
-    if (elementId === 'autocomplete') {
-      return this.getDefaultConfigOfAutocompleteWidget();
-    }
-
-    if (elementId === 'cascader') {
-      return this.getDefaultConfigOfCascaderWidget();
-    }
-
-    if (elementId === 'checkbox') {
-      return this.getDefaultConfigOfCheckboxWidget();
-    }
-
-    if (elementId === 'date') {
-      return this.getDefaultConfigOfDateWidget();
-    }
-
-    if (elementId === 'number') {
-      return this.getDefaultConfigOfNumberWidget();
-    }
-
-    if (elementId === 'radio') {
-      return this.getDefaultConfigOfRadioWidget();
-    }
-
-    if (elementId === 'range') {
-      return this.getDefaultConfigOfRangeWidget();
-    }
-
-    if (elementId === 'rate') {
-      return this.getDefaultConfigOfRateWidget();
-    }
-
-    if (elementId === 'select') {
-      return this.getDefaultConfigOfSelectWidget();
-    }
-
-    if (elementId === 'tag') {
-      return this.getDefaultConfigOfTagWidget();
-    }
-
-    if (elementId === 'text') {
-      return this.getDefaultConfigOfTextWidget();
-    }
-
-    if (elementId === 'textarea') {
-      return this.getDefaultConfigOfTextareaWidget();
-    }
-
-    if (elementId === 'time') {
-      return this.getDefaultConfigOfTimeWidget();
-    }
-
-    if (elementId === 'transfer') {
-      return this.getDefaultConfigOfTransferWidget();
-    }
-
-    if (elementId === 'tree-select') {
-      return this.getDefaultConfigOfTreeSelectWidget();
-    }
-    if (elementId === 'upload') {
-      return this.getDefaultConfigOfUploadWidget();
-    }
-
-
     this.messageService.info('正在努力开发中~~');
     return;
   }
@@ -137,8 +58,6 @@ export class FormElementService {
     return {
       type: 'string',
       title: '名称',
-      maxLength: 6,
-      readOnly: false,
       ui: {
         placeholder: '请输入名称',
       } as SFStringWidgetSchema,
@@ -202,7 +121,7 @@ export class FormElementService {
       ],
       ui: 'cascader',
       default: [110000, 110100, 110105],
-    }as SFSchema;
+    } as SFSchema;
   }
 
   private getDefaultConfigOfCheckboxWidget(): SFSchema {
@@ -225,7 +144,7 @@ export class FormElementService {
   }
 
   private getDefaultConfigOfNumberWidget(): SFSchema {
-    return {type: 'number', minimum: 18, maximum: 100, multipleOf: 2}as SFSchema;
+    return {type: 'number', minimum: 18, maximum: 100, multipleOf: 2} as SFSchema;
   }
 
   private getDefaultConfigOfRadioWidget(): SFSchema {
@@ -348,7 +267,7 @@ export class FormElementService {
     } as SFSchema;
   }
 
-  private getDefaultConfigOfUploadWidget():SFSchema {
+  private getDefaultConfigOfUploadWidget(): SFSchema {
     return {
       type: 'string',
       title: '单个文件',
