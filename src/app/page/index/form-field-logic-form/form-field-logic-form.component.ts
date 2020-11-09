@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SFSchema} from '@delon/form';
-import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import {NzModalRef} from 'ng-zorro-antd/modal';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-form-field-logic-form',

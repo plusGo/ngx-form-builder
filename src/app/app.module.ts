@@ -2,7 +2,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {en_US, NZ_I18N, NZ_ICONS, NzIconModule} from 'ng-zorro-antd';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
@@ -11,6 +10,8 @@ import {ShareModule} from './share/share.module';
 import {RouterModule} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
 import {DashboardOutline, FormOutline, PlusOutline, MenuFoldOutline, MenuUnfoldOutline} from '@ant-design/icons-angular/icons';
+import {NZ_ICONS, NzIconModule} from 'ng-zorro-antd/icon';
+import {en_US, NZ_I18N} from 'ng-zorro-antd/i18n';
 
 registerLocaleData(zh);
 

@@ -46,8 +46,6 @@ export class FormFiledSchemaFormComponent implements OnInit {
     };
     this.basicSchemaFormRef.refreshSchema(this.basicSchema);
 
-    if (fieldSchema === 'string') {
-    }
 
   }
 

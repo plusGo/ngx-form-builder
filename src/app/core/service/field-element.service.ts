@@ -17,11 +17,11 @@ import {
   SFTreeSelectWidgetSchema,
   SFUploadWidgetSchema
 } from '@delon/form';
-import {NzMessageService} from 'ng-zorro-antd';
 import {of} from 'rxjs';
 import {FormElementData} from '../constant/form-field.map';
 import {FormFieldType} from '../type/form-field.type';
 import {FormSchemaFactory} from '../../model/factory/form-schema.factory';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 
 @Injectable({

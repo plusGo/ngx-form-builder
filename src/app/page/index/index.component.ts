@@ -5,8 +5,8 @@ import {SFComponent, SFSchema} from '@delon/form';
 import {JsonUtil} from '../../core/util/json.util';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {FormFieldType} from '../../core/type/form-field.type';
-import {NzModalService} from 'ng-zorro-antd';
 import {FormFieldLogicFormComponent} from './form-field-logic-form/form-field-logic-form.component';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-index',

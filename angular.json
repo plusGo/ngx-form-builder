@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "et-form-builder"
+  "defaultProject": "et-form-builder",
+  "cli": {
+    "analytics": false
+  }
 }
