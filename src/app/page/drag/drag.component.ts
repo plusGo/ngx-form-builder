@@ -36,10 +36,10 @@ export class DragComponent implements OnInit {
       {
         id: 'rootx', type: 'container', children: [
 
-          // {id: 'rootx1', type: 'item', span: 8},
-          // {id: 'rootx5', type: 'item', span: 8},
-          // {id: 'rootx3', type: 'item', span: 8},
-          // {id: 'rootx4x', type: 'item', span: 8},
+          {id: 'rootx1', type: 'item', span: 8},
+          {id: 'rootx5', type: 'item', span: 24},
+          {id: 'rootx3', type: 'item', span: 8},
+          {id: 'rootx4x', type: 'item', span: 8},
         ]
       }
     ]
