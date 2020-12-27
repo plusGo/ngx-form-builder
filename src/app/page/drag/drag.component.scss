@@ -1,0 +1,20 @@
+.build-wrapper{
+  width: 880px;
+  height: 800px;
+  background-color: #e0e0e0;
+}
+
+.build-material-wrapper{
+  width: 200px;
+  height: 800px;
+  background-color: #e0e0e0;
+  margin-right: 24px;
+}
+
+:host{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}

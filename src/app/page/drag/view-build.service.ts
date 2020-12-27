@@ -5,32 +5,16 @@ import {NodeModel} from './model/node.model';
 @Injectable()
 export class ViewBuildService {
   private nodes: NodeModel[] = []; // 扁平化的node
-  nodeIds: string[] = [];
+  nodeIds: string[] = ['$empty$'];
 
-  public insertEmptyNode(parentNode: NodeModel): void {
-    if (parentNode && parentNode.children && parentNode.children.length === 0) {
-      parentNode.children = [{
-        id: parentNode.id + '$emptyChild$',
-        emptyCatch: true,
-        type: 'item',
-        parent: parentNode,
-      }
-      ];
-    }
+  buildEmptyNodeModel(parent: NodeModel): NodeModel {
+    return {
+      id: '$empty$',
+      type: 'item',
+      parent: parent,
+    };
   }
 
-  public deleteEmptyNode(parentNode: NodeModel): void {
-    if (parentNode && parentNode.children && parentNode.children.length > 1) {
-      parentNode.children = parentNode.children.filter(node => {
-        if (node.emptyCatch) {
-          this.unRegister(node);
-          return false;
-        } else {
-          return true;
-        }
-      });
-    }
-  }
 
   register(node: NodeModel): void {
     this.unRegister(node);
@@ -59,24 +43,29 @@ export class ViewBuildService {
     return this.nodes.find(node => node.id === nodeId);
   }
 
-  transform(originTreeNode: NodeModel, targetTreeNode: NodeModel, beforeOrAfter: 'before' | 'after'): void {
-    if (originTreeNode === targetTreeNode) {
+  append(parentNode: NodeModel, originNode: NodeModel): void {
+    originNode.parent.children = originNode.parent.children.filter(node => node !== originNode);
+    originNode.parent = parentNode; // 修改节点的父节点指向
+
+    parentNode.children.push(originNode)
+  }
+
+  transform(originNode: NodeModel, targetNode: NodeModel, beforeOrAfter: 'before' | 'after'): void {
+    if (originNode === targetNode) {
       return;
     }
-    if (!targetTreeNode.parent) { // 根节点，不让拖拽了
+    if (!targetNode.parent) { // 根节点，不让拖拽了
       return;
     }
 
-    originTreeNode.parent.children = originTreeNode.parent.children.filter(node => node !== originTreeNode);
-    this.insertEmptyNode(originTreeNode.parent);
+    originNode.parent.children = originNode.parent.children.filter(node => node !== originNode);
 
-    const currentIndex = targetTreeNode.parent.children.indexOf(targetTreeNode);
+    const currentIndex = targetNode.parent.children.indexOf(targetNode);
     if (currentIndex !== -1) {
-      targetTreeNode.parent.children.splice(beforeOrAfter === 'before' ? currentIndex : currentIndex + 1, 0, originTreeNode);
-      this.deleteEmptyNode(targetTreeNode.parent);
+      targetNode.parent.children.splice(beforeOrAfter === 'before' ? currentIndex : currentIndex + 1, 0, originNode);
     }
 
-    originTreeNode.parent = targetTreeNode.parent; // 修改节点的父节点指向
+    originNode.parent = targetNode.parent; // 修改节点的父节点指向
 
   }
 }

@@ -7,6 +7,5 @@ export interface NodeModel {
   children?: NodeModel[];
   parent?: NodeModel | null;
   simple?: boolean;
-  emptyCatch?: boolean; // 空白节点，用于捕捉dropDown
   dropList?: CdkDropList;
 }

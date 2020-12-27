@@ -1,0 +1,33 @@
+<div class="view-build-tree-node-inner" cdkDropList
+     [id]="nodeModel?.id"
+     [cdkDropListConnectedTo]="viewBuildService?.nodeIds"
+     (cdkDropListEntered)="dragEntered($event)"
+     (cdkDropListDropped)="drop($event)"
+     [cdkDropListData]="nodeModel">
+  <div cdkDrag class="node-box {{nodeModel?.type}}">
+    <span class="node-box-id">
+      id:{{nodeModel?.id}},type:{{nodeModel?.type}},span:{{nodeModel?.span}}
+      ,registered:{{dropList?.connectedTo?.length}},{{dropList?.id}}
+    </span>
+    <i class="node-box-drag-handle" nz-icon nzType="drag" nzTheme="outline" cdkDragHandle></i>
+    <div class="node-box-inner-container" *ngIf="showInnerContainer()">
+      <div [cdkDropListData]="viewBuildService.buildEmptyNodeModel(this.nodeModel)"
+           [id]="'$empty$'"
+           (cdkDropListDropped)="drop($event)"
+           *ngIf="isEmpty()"
+           cdkDropList
+           [cdkDropListConnectedTo]="viewBuildService?.nodeIds"
+           class="node-box-empty-catch">
+        请添加
+      </div>
+      <div nz-row>
+        <div *ngFor="let child of nodeModel?.children;" nz-col [nzSpan]="child?.span || 24">
+          <app-view-build-tree-node [nodeModel]="child">
+          </app-view-build-tree-node>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

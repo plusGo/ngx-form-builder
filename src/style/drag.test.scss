@@ -10,6 +10,7 @@ app-view-build-tree-node {
   color: #333;
   position: relative;
   min-height: 40px;
+  overflow: hidden;
 
 
   &-id {
@@ -39,9 +40,13 @@ app-view-build-tree-node {
     padding: 24px;
   }
 
-  &.emptyCatch {
-    padding: 48px;
-    margin: 24px;
+  &-empty-catch {
+    height: 60px;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &.cdk-drag-placeholder {
