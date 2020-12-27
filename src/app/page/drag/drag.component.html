@@ -1,4 +1,4 @@
-<app-view-build-tree cdkDropListGroup #ad="cdkDropListGroup" style="display: flex">>
+<app-view-build-tree >
   <div class="build-material-wrapper">
     <ng-container *ngFor="let node of buildMaterialTree?.children">
       <app-view-build-tree-node [nodeModel]="node"></app-view-build-tree-node>
@@ -8,4 +8,3 @@
     <app-view-build-tree-node [nodeModel]="buildViewTree"></app-view-build-tree-node>
   </div>
 </app-view-build-tree>
-{{ad?._items?.size}}
