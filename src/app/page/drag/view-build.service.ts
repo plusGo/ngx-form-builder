@@ -4,7 +4,8 @@ import {NodeModel} from './model/node.model';
 @Injectable()
 export class ViewBuildService {
   private nodes: NodeModel[] = []; // 扁平化的node
-  nodeIds: string[] = ['$empty$'];
+  nodeIds: string[] = [];
+  root: NodeModel;
 
   buildEmptyNodeModel(parent: NodeModel): NodeModel {
     return {
@@ -17,7 +18,26 @@ export class ViewBuildService {
   register(node: NodeModel): void {
     this.unRegister(node);
     this.nodes.push(node);
-    this.nodeIds.push(node.id);
+
+    this.recursionAction(this.root, node => {
+      debugger
+      if (!node.parent) {
+        node.level = 0;
+        return;
+      }
+      node.level = node.parent.level++;
+    });
+
+    this.nodes.sort((x, y) => x.level - y.level);
+    this.nodeIds.splice(0, this.nodeIds.length, ...this.nodes.map(node => node.id));
+    console.log(`register a new node:${node.id}`, `${JSON.stringify(this.nodeIds)}`);
+  }
+
+  recursionAction(node: NodeModel, action: (node: NodeModel) => void): void {
+    action(node);
+    if (node && node.children) {
+      node.children.forEach($node => this.recursionAction($node, action));
+    }
   }
 
   unRegister(node: NodeModel): void {

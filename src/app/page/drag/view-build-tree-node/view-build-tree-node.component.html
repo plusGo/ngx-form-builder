@@ -7,13 +7,13 @@
   <div cdkDrag class="node-box {{nodeModel?.type}}">
     <span class="node-box-id">
       id:{{nodeModel?.id}},type:{{nodeModel?.type}},span:{{nodeModel?.span}}
-      ,registered:{{dropList?.connectedTo?.length}},{{dropList?.id}}
+      ,registered:{{dropList?.connectedTo?.length}},{{dropList?.id}},emptyId:${{emptyId}},level:{{nodeModel?.level}}
     </span>
     <i class="node-box-drag-handle" nz-icon nzType="drag" nzTheme="outline" cdkDragHandle></i>
     <div class="node-box-inner-container" *ngIf="showInnerContainer()">
       <div [cdkDropListData]="viewBuildService.buildEmptyNodeModel(this.nodeModel)"
-           [id]="'$empty$'"
-           (cdkDropListDropped)="drop($event)"
+           [id]="emptyId"
+           (cdkDropListDropped)="drop($event,true)"
            *ngIf="isEmpty()"
            cdkDropList
            [cdkDropListConnectedTo]="viewBuildService?.nodeIds"

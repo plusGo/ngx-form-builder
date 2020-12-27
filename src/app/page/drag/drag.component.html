@@ -1,10 +1,32 @@
-<app-view-build-tree >
+<app-view-build-tree [root]="buildViewTree">
   <div class="build-material-wrapper">
-    <ng-container *ngFor="let node of buildMaterialTree?.children">
-      <app-view-build-tree-node [nodeModel]="node"></app-view-build-tree-node>
-    </ng-container>
+    <app-view-build-tree-node [nodeModel]="buildViewTree.children[0]"></app-view-build-tree-node>
   </div>
   <div class="build-wrapper">
-    <app-view-build-tree-node [nodeModel]="buildViewTree"></app-view-build-tree-node>
+    <app-view-build-tree-node [nodeModel]="buildViewTree.children[1]"></app-view-build-tree-node>
   </div>
 </app-view-build-tree>
+
+
+<!--<div cdkDropList id="a" [cdkDropListConnectedTo]="['b']" style="display: flex;flex-direction: column;width: 400px">-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--  <div cdkDrag class="demo-box"></div>-->
+<!--</div>-->
+<!--<div cdkDropList id="b" [cdkDropListConnectedTo]="['a']" style="display: flex;flex-direction: column;width: 400px">-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--  <div cdkDrag class="demo-box2"></div>-->
+<!--</div>-->
