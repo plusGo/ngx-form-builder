@@ -1,0 +1,68 @@
+app-view-build-tree-node {
+  display: block;
+
+  .view-build-tree-node-inner {
+    margin: 8px;
+  }
+}
+
+.node-box {
+  color: #333;
+  position: relative;
+  min-height: 40px;
+
+
+  &-id {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    font-size: 12px;
+  }
+
+
+  &-drag-handle {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    cursor: move;
+  }
+
+  &.container {
+    border: 1px dashed #1890ff;
+  }
+
+  &.item {
+    border: 1px dashed #3F486B;
+  }
+
+  &-inner-container {
+    padding: 24px;
+  }
+
+  &.emptyCatch {
+    padding: 48px;
+    margin: 24px;
+  }
+
+  &.cdk-drag-placeholder {
+    height: 10px !important;
+    min-height: 10px !important;
+    background-color: #000;
+    overflow: hidden;
+
+    * {
+      display: none;
+    }
+  }
+
+  &.cdk-drag-preview {
+    height: 10px !important;
+    min-height: 10px !important;
+    background-color: #000;
+    overflow: hidden;
+
+    * {
+      display: none;
+    }
+  }
+}

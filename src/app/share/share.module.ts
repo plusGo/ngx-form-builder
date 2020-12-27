@@ -11,12 +11,14 @@ import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzTabsModule} from 'ng-zorro-antd/tabs';
+import {NzGridModule} from 'ng-zorro-antd/grid';
 
 export const NG_ZORRO_MODULES = [
   NzModalModule,
   NzButtonModule,
   NzMessageModule,
   NzLayoutModule,
+  NzGridModule,
   NzIconModule,
   NzCardModule,
   NzTabsModule

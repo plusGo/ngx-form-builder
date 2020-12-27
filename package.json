@@ -19,14 +19,14 @@
     "@angular/platform-browser": "~10.2.0",
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.2.0",
-    "@delon/form": "10.0.0",
+    "@delon/form": "^10.1.2",
     "@types/ajv": "^1.0.0",
     "ajv": "^6.10.2",
     "ng-zorro-antd": "^10.0.0",
+    "ng2-ace-editor": "^0.3.9",
     "rxjs": "~6.6.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2",
-    "ng2-ace-editor": "^0.3.9"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1002.0",
