@@ -69,6 +69,7 @@ export class ViewBuildTreeNodeComponent implements OnInit, AfterViewInit, OnChan
         ...event.previousContainer.data,
         id: event.previousContainer.data.id + new Date().getTime(),
         simple: false,
+        children: []
       };
     }
 
@@ -90,7 +91,7 @@ export class ViewBuildTreeNodeComponent implements OnInit, AfterViewInit, OnChan
       });
     }
     if (this.showInnerContainer() && this.isEmpty()) {
-      this.viewBuildService.nodeIds.push(this.emptyId);
+      this.viewBuildService.emptyIds.push(this.emptyId);
     }
   }
 

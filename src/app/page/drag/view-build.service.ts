@@ -6,6 +6,7 @@ export class ViewBuildService {
   private nodes: NodeModel[] = []; // 扁平化的node
   nodeIds: string[] = [];
   root: NodeModel;
+  emptyIds: string[] = [];
 
   buildEmptyNodeModel(parent: NodeModel): NodeModel {
     return {
@@ -29,7 +30,7 @@ export class ViewBuildService {
     });
 
     this.nodes.sort((x, y) => x.level - y.level);
-    this.nodeIds.splice(0, this.nodeIds.length, ...this.nodes.map(node => node.id));
+    this.nodeIds.splice(0, this.nodeIds.length, ...this.emptyIds, ...this.nodes.map(node => node.id));
     console.log(`register a new node:${node.id}`, `${JSON.stringify(this.nodeIds)}`);
   }
 
